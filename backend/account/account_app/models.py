@@ -21,7 +21,7 @@ class User(AbstractBaseUser):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=300, null=False)
     name = models.CharField(max_lenght=128, null=False)
-    interest = models.CharField(max_length=128)
+    interest = models.CharField(max_length=128, blank=True, null=True)
     llm_num = models.IntegerField(default = 0)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
