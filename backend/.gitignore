@@ -22,3 +22,6 @@ env/
 # Translation files
 *.pot
 *.mo
+
+#environmental variables
+.env

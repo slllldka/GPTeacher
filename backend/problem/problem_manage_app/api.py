@@ -12,7 +12,7 @@ class ProblemWithUserID(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     def post(self, request, user_id):
-        serializer = ProblemSerializer(data=request.data)
+        serializer = ProblemSerializer(data=request.data, context={'user_id':user_id})
         if serializer.is_valid():
             serializer.save()
             return Response({'success':True}, status=status.HTTP_201_CREATED)
