@@ -90,7 +90,7 @@ def signin(request):
     if user is not None:
         refresh_token = RefreshToken.for_user(user)
         access_token = refresh_token.access_token
-        return Response({'success':True, 'access':access_token, 'refresh':refresh_token}, status=status.HTTP_200_OK)
+        return Response({'success':True, 'access':str(access_token), 'refresh':str(refresh_token)}, status=status.HTTP_200_OK)
     #fail
     else:
         return Response({'error':'wrong email or password'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -102,7 +102,7 @@ def valid(request):
     return Response({'success':True}, status=status.HTTP_200_OK)
     
 # refresh access token with refresh token
-@api_view('POST')
+@api_view(['POST'])
 def refresh(request):
     refreshStr = request.data.get('refresh')
     if refreshStr is None:
