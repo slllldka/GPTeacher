@@ -1,8 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import Title from '../components/Title'
+import { useEffect } from "react";
 
 function Home(){
     let navigate = useNavigate()
+    const isAuthenticated = localStorage.getItem('refresh') !== null
+
+    useEffect(()=>{
+        if (isAuthenticated){
+            navigate('/lobby')
+        }
+    }, [navigate, isAuthenticated])
 
     return (
     <>

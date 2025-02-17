@@ -8,6 +8,13 @@ function SignUp() {
     let url = 'http://localhost:8000'
 
     let navigate = useNavigate()
+    const isAuthenticated = localStorage.getItem('refresh') !== null
+
+    useEffect(()=>{
+        if (isAuthenticated){
+            navigate('/lobby')
+        }
+    }, [navigate, isAuthenticated])
 
     let [email, setEmail] = useState('')
     let [disable_input_email, set_disable_input_email] = useState(false)
