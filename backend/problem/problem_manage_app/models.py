@@ -5,7 +5,6 @@ from django.dispatch import receiver
 # Create your models here.
 
 class Problem(models.Model):
-    id = models.AutoField()
     user_id = models.BigIntegerField()
     title = models.CharField(max_length=128)
     problem_description = models.TextField()
@@ -26,8 +25,8 @@ class Algorithm(models.Model):
     description = models.TextField()
     
 class ProblemAlgorithm(models.Model):
-    problem_id = models.models.ForeignKey(Problem, to_field='id', on_delete=models.CASCADE)
-    algorithm_id = models.models.ForeignKey(Algorithm, to_field='id', on_delete=models.CASCADE)
+    problem_id = models.ForeignKey(Problem, to_field='id', on_delete=models.CASCADE)
+    algorithm_id = models.ForeignKey(Algorithm, to_field='id', on_delete=models.CASCADE)
     
     class Meta:
         constraints = [

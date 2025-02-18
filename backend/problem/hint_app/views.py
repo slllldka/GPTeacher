@@ -7,6 +7,6 @@ from .serializers import HintSerializer
 
 # Create your views here.
 
-class ProblemViewSet(viewsets.ModelViewSet):
+class HintViewSet(viewsets.ModelViewSet):
     queryset = Hint.objects.all()
     serializer_class = HintSerializer
