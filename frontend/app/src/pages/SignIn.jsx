@@ -39,10 +39,10 @@ function SignIn() {
                     try{
                         const response = await axios.post(url+'/account/signin', {email, password})
                         if (response.status == 200){
-                            localStorage.setItem('access', response.data.access)
-                            localStorage.setItem('refresh', response.data.refresh)
-                            console.log('access: '+localStorage.getItem('access'))
-                            console.log('refresh: '+localStorage.getItem('refresh'))
+                            localStorage.setItem('access_token', response.data.access)
+                            localStorage.setItem('refresh_token', response.data.refresh)
+                            console.log('access: '+localStorage.getItem('access_token'))
+                            console.log('refresh: '+localStorage.getItem('refresh_token'))
                             navigate('/lobby')
                         }
                     } catch(error){

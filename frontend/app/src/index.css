@@ -84,3 +84,18 @@ input {
   font-family: inherit;
   transition: border-color 0.25s;
 }
+
+textarea{
+  border-radius: 5px;
+  border: 1px solid black;
+  padding: 0.6em 1.2em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  transition: border-color 0.25s;
+}
