@@ -15,7 +15,7 @@ openai.api_key = config('OPENAI_API_KEY', default=None)
 class HintWithProblemID(APIView):
     def get(self, request, problem_id):
         try:
-            access_token = getHeader()
+            access_token = getHeader(request)
         except ResponseException as e:
             return e.response
         

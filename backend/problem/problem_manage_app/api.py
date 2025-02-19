@@ -9,7 +9,7 @@ class ListofProblem(APIView):
     
     def get(self, request, page: int):
         try:
-            access_token = getHeader()
+            access_token = getHeader(request)
         except ResponseException as e:
             return e.response
         
@@ -18,7 +18,7 @@ class ListofProblem(APIView):
         except ResponseException as e:
             return e.response
         
-        count = Problem.objects.count(user_id=user.id)
+        count = Problem.objects.count(user_id=user['id'])
         if page <= 0:
             page = 1
         elif count == 0:
@@ -26,7 +26,7 @@ class ListofProblem(APIView):
         elif (10*(page-1)+1) > count:
             page = int((count-1) / 10) + 1
         
-        model = Problem.objects.filter(user_id=user.id)[10*(page-1), 10*page]
+        model = Problem.objects.filter(user_id=user['id'])[10*(page-1), 10*page]
         serializer = ProblemSerializer(model, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
         
@@ -34,7 +34,7 @@ class OneProblem(APIView):
     
     def get(self, request, id):
         try:
-            access_token = getHeader()
+            access_token = getHeader(request)
         except ResponseException as e:
             return e.response
         
@@ -46,7 +46,7 @@ class OneProblem(APIView):
         if id:
         
             try:
-                model = Problem.objects.get(id=id, user_id=user.id)
+                model = Problem.objects.get(id=id, user_id=user['id'])
             except Problem.DoesNotExist:
                 return Response({'error':'content does not exist'}, status=status.HTTP_404_NOT_FOUND)
             
@@ -58,7 +58,7 @@ class OneProblem(APIView):
     
     def post(self, request):
         try:
-            access_token = getHeader()
+            access_token = getHeader(request)
         except ResponseException as e:
             return e.response
         
@@ -67,16 +67,19 @@ class OneProblem(APIView):
         except ResponseException as e:
             return e.response
         
-        serializer = ProblemSerializer(data=request.data, context={'user_id':user.id})
+        data = request.data.copy()
+        data['user_id'] = user['id']
+        serializer = ProblemSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response({'success':True}, status=status.HTTP_201_CREATED)
         else:
+            print(serializer.errors)
             return Response({'error':'wrong parameters'}, status = status.HTTP_400_BAD_REQUEST)
     
     def patch(self, request, id):
         try:
-            access_token = getHeader()
+            access_token = getHeader(request)
         except ResponseException as e:
             return e.response
         
@@ -88,7 +91,7 @@ class OneProblem(APIView):
         if id:
         
             try:
-                model = Problem.objects.get(id=id, user_id=user.id)
+                model = Problem.objects.get(id=id, user_id=user['id'])
             except Problem.DoesNotExist:
                 return Response({'error':'content does not exist'}, status=status.HTTP_404_NOT_FOUND)
             
@@ -104,7 +107,7 @@ class OneProblem(APIView):
     
     def delete(self, request, id):
         try:
-            access_token = getHeader()
+            access_token = getHeader(request)
         except ResponseException as e:
             return e.response
         
@@ -116,7 +119,7 @@ class OneProblem(APIView):
         if id:
         
             try:
-                model = Problem.objects.get(id=id, user_id=user.id)
+                model = Problem.objects.get(id=id, user_id=user['id'])
             except Problem.DoesNotExist:
                 return Response({'error':'content does not exist'}, status=status.HTTP_404_NOT_FOUND)
             

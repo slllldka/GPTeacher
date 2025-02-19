@@ -10,6 +10,6 @@ router.register('Problem', views.ProblemViewSet) #itemviewset 과 item이라는 
 urlpatterns = [
     path('', include(router.urls)),
     path('list/<int:page>', ListofProblem.as_view(), name='ListofProblem'),
-    path('', OneProblem.as_view(), name='OneProblem'),
+    path('create', OneProblem.as_view(), name='OneProblem'),
     path('<int:id>', OneProblem.as_view(), name='OneProblem'),
 ]

@@ -10,8 +10,8 @@ class Problem(models.Model):
     problem_description = models.TextField()
     input_description = models.TextField()
     output_description = models.TextField()
-    time_limit = models.FloatField()
-    memory_limit = models.IntegerField()
+    time_limit = models.TextField()
+    memory_limit = models.TextField()
     
     level = models.CharField(max_length=10, default='easy')
     
