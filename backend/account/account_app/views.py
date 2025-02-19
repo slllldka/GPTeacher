@@ -1,3 +1,4 @@
+from django.forms import model_to_dict
 from django.shortcuts import render
 
 from .models import User
@@ -99,7 +100,7 @@ def signin(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def valid(request):
-    return Response({'success':True}, status=status.HTTP_200_OK)
+    return Response({'success':True, 'user':model_to_dict(request.user, fields=['id', 'interest', 'llm_num', 'is_superuser'])}, status=status.HTTP_200_OK)
     
 # refresh access token with refresh token
 @api_view(['POST'])

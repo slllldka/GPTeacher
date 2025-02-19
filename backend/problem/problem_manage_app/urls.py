@@ -9,6 +9,7 @@ router.register('Problem', views.ProblemViewSet) #itemviewset 과 item이라는 
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('problem/id/<int:user_id>', ProblemWithUserID.as_view(), name='ProblemWithUserID'),
-    path('user/id/<int:user_id>/<int:id>', ProblemWithUserIDAndProblemID.as_view(), name='ProblemWithUserIDAndProblemID'),
+    path('list/<int:page>', ListofProblem.as_view(), name='ListofProblem'),
+    path('', OneProblem.as_view(), name='OneProblem'),
+    path('<int:id>', OneProblem.as_view(), name='OneProblem'),
 ]

@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import Hint
 from problem_manage_app.models import Problem
 from .serializers import *
+from authenticate.authenticate import *
 
 import openai
 from decouple import config
@@ -13,6 +14,21 @@ openai.api_key = config('OPENAI_API_KEY', default=None)
 
 class HintWithProblemID(APIView):
     def get(self, request, problem_id):
+        try:
+            access_token = getHeader()
+        except ResponseException as e:
+            return e.response
+        
+        try:
+            user = authenticate(access_token)
+        except ResponseException as e:
+            return e.response
+        
+        try:
+            problem = Problem.objects.get(id=problem_id, user_id=user.id)
+        except Problem.DoesNotExist:
+            return Response({'error':'problem does not exist'}, status=status.HTTP_400_BAD_REQUEST)
+        
         model = Hint.objects.filter(problem_id=problem_id)
         serializer = HintSerializer(model, many=True)
         

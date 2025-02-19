@@ -9,5 +9,5 @@ router.register('Hint', views.HintViewSet) #itemviewset 과 item이라는 router
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('hint/id/<int:problem_id>', HintWithProblemID.as_view(), name='HintWithProblemID'),
+    path('<int:problem_id>', HintWithProblemID.as_view(), name='HintWithProblemID'),
 ]
