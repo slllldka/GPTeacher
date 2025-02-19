@@ -18,7 +18,9 @@ class ListofProblem(APIView):
         except ResponseException as e:
             return e.response
         
-        count = Problem.objects.count(user_id=user['id'])
+        print(user)
+        
+        count = Problem.objects.filter(user_id=user['id']).count()
         if page <= 0:
             page = 1
         elif count == 0:
@@ -26,7 +28,7 @@ class ListofProblem(APIView):
         elif (10*(page-1)+1) > count:
             page = int((count-1) / 10) + 1
         
-        model = Problem.objects.filter(user_id=user['id'])[10*(page-1), 10*page]
+        model = Problem.objects.filter(user_id=user['id'])[10*(page-1):10*page]
         serializer = ProblemSerializer(model, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
         
