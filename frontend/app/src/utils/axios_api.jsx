@@ -26,6 +26,8 @@ async function refreshAccessToken(){
         if (error.response.status == 401){
             localStorage.removeItem('access_token')
             localStorage.removeItem('refresh_token')
+            window.alert('로그인 정보가 만료되었습니다.')
+            window.location.href='/'
         }
         console.log(error.response.data.error)
         console.log(error.message)

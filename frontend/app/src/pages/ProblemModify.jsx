@@ -1,9 +1,11 @@
 import Title from "../components/Title"
 import { problem_api } from "../utils/axios_api"
-import { useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
 
-function ProblemGenerate(){
+function ProblemModify(){
+    const { id } = useParams()
+
     let navigate = useNavigate()
 
     let [title, set_title] = useState('')
@@ -12,6 +14,27 @@ function ProblemGenerate(){
     let [output_description, set_output_description] = useState('')
     let [time_limit, set_time_limit] = useState('')
     let [memory_limit, set_memory_limit] = useState('')
+
+    useEffect(()=>{
+        const fetchData = async() => {
+            try{
+                const response = await problem_api.get(`/problem/${id}`)
+                if (response.status == 200){
+                    set_title(response.data.title)
+                    set_problem_description(response.data.problem_description)
+                    set_input_description(response.data.input_description)
+                    set_output_description(response.data.output_description)
+                    set_time_limit(response.data.time_limit)
+                    set_memory_limit(response.data.memory_limit)
+                }
+            }catch(error){
+                console.log(error.response.data.error)
+                console.log(error.message)
+            }
+        }
+
+        fetchData()
+    }, [id])
 
     return(
         <>
@@ -46,21 +69,21 @@ function ProblemGenerate(){
                 <br></br>
                 <button style={{float:'right'}} onClick={async ()=>{
                     try {
-                        const response = await problem_api.post('/problem/create',
+                        const response = await problem_api.patch(`/problem/${id}`,
                             {title, problem_description, input_description, output_description, time_limit, memory_limit})
-                        if (response.status == 201){
-                            navigate('/lobby/1')
+                        if (response.status == 200){
+                            navigate(`/problem/${id}`)
                         }
                     } catch(error){
                         console.log(error.response.data.error)
                         console.log(error.message)
                     }
                 }}>
-                    문제 생성
+                    저장
                 </button>
             </div>
         </>
     )
 }
 
-export default ProblemGenerate
+export default ProblemModify

@@ -4,11 +4,11 @@ import { useEffect } from "react";
 
 function Home(){
     let navigate = useNavigate()
-    const isAuthenticated = localStorage.getItem('refresh') !== null
+    const isAuthenticated = localStorage.getItem('refresh_token') !== null
 
     useEffect(()=>{
         if (isAuthenticated){
-            navigate('/lobby')
+            navigate('/lobby/1')
         }
     }, [navigate, isAuthenticated])
 

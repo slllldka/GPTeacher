@@ -43,7 +43,7 @@ function SignIn() {
                             localStorage.setItem('refresh_token', response.data.refresh)
                             console.log('access: '+localStorage.getItem('access_token'))
                             console.log('refresh: '+localStorage.getItem('refresh_token'))
-                            navigate('/lobby')
+                            navigate('/lobby/1')
                         }
                     } catch(error){
                         set_email_or_password_wrong(true)
