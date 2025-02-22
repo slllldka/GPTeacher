@@ -115,4 +115,4 @@ def refresh(request):
             return Response({'access':str(access_token)})
         
         except TokenError:
-            Response({'error':'expired refresh token'}, status = status.HTTP_401_UNAUTHORIZED)
+            return Response({'error':'expired refresh token'}, status = status.HTTP_401_UNAUTHORIZED)

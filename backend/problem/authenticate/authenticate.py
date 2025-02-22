@@ -21,5 +21,5 @@ def authenticate(access_token):
     headers = {'Authorization': 'Bearer ' + access_token}
     response = requests.post(url, headers=headers)
     if response.status_code != 200:
-        raise ResponseException(response)
+        raise ResponseException(Response({'error':'unauthorized'}, status=status.HTTP_401_UNAUTHORIZED))
     return response.json().get('user')

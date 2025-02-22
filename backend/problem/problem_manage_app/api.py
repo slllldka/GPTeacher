@@ -18,9 +18,8 @@ class ListofProblem(APIView):
         except ResponseException as e:
             return e.response
         
-        print(user)
-        
         count = Problem.objects.filter(user_id=user['id']).count()
+        max_page = int((count + 9) / 10)
         if page <= 0:
             page = 1
         elif count == 0:
@@ -28,9 +27,9 @@ class ListofProblem(APIView):
         elif (10*(page-1)+1) > count:
             page = int((count-1) / 10) + 1
         
-        model = Problem.objects.filter(user_id=user['id'])[10*(page-1):10*page]
+        model = Problem.objects.filter(user_id=user['id']).order_by('id')[10*(page-1):10*page]
         serializer = ProblemSerializer(model, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({'cur_page': page, 'max_page': max_page,'problems': serializer.data}, status=status.HTTP_200_OK) 
         
 class OneProblem(APIView):
     
@@ -53,7 +52,7 @@ class OneProblem(APIView):
                 return Response({'error':'content does not exist'}, status=status.HTTP_404_NOT_FOUND)
             
             serializer = ProblemSerializer(model)
-            return Response(serializer.data, stauts=status.HTTP_200_OK)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         
         else:
             return Response({'error':'need problem id for this request'}, status=status.HTTP_400_BAD_REQUEST)
