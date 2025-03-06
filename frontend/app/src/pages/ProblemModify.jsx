@@ -69,10 +69,12 @@ function ProblemModify(){
                 <br></br>
                 <button style={{float:'right'}} onClick={async ()=>{
                     try {
-                        const response = await problem_api.patch(`/problem/${id}`,
-                            {title, problem_description, input_description, output_description, time_limit, memory_limit})
-                        if (response.status == 200){
-                            navigate(`/problem/${id}`)
+                        if (window.confirm('문제 수정 시 생성된 힌트가 삭제되며, 힌트를 다시 생성하셔야 합니다. 진행하시겠습니까?')){
+                            const response = await problem_api.patch(`/problem/${id}`,
+                                {title, problem_description, input_description, output_description, time_limit, memory_limit})
+                            if (response.status == 200){
+                                navigate(`/problem/${id}`)
+                            }
                         }
                     } catch(error){
                         console.log(error.response.data.error)

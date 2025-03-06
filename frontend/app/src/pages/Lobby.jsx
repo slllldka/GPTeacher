@@ -34,6 +34,9 @@ function Lobby() {
                         copy_titles[i] = problem['title']
                         copy_ids[i] = problem['id']
                     }
+                    for(let i=response.data.problems.length;i<10;i++){
+                        copy_displays[i] = 'none'
+                    }
                     set_displays(copy_displays)
                     set_titles(copy_titles)
                     set_ids(copy_ids)

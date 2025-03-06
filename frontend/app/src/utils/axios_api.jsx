@@ -17,6 +17,7 @@ async function refreshAccessToken(){
         const response = await axios.post('http://localhost:8000/account/refresh', {refresh:localStorage.getItem('refresh_token')})
         if(response.status == 200){
             localStorage.setItem('access_token', response.data.access)
+            console.log("access token 갱신")
             return response.data.access
         }
         else{
