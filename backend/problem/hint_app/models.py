@@ -8,4 +8,4 @@ class Hint(models.Model):
     key_text = models.TextField()
     key_text_start_idx = models.IntegerField()
     key_text_end_idx = models.IntegerField()
-    description = models.IntegerField()
+    description = models.TextField()

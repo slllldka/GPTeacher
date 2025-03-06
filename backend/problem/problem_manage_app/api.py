@@ -4,6 +4,7 @@ from rest_framework import status
 from .models import Problem
 from .serializers import *
 from authenticate.authenticate import *
+from hint_app.models import Hint
 
 class ListofProblem(APIView):
     
@@ -27,7 +28,7 @@ class ListofProblem(APIView):
         elif (10*(page-1)+1) > count:
             page = int((count-1) / 10) + 1
         
-        model = Problem.objects.filter(user_id=user['id']).order_by('id')[10*(page-1):10*page]
+        model = Problem.objects.filter(user_id=user['id']).order_by('-id')[10*(page-1):10*page]
         serializer = ProblemSerializer(model, many=True)
         return Response({'cur_page': page, 'max_page': max_page,'problems': serializer.data}, status=status.HTTP_200_OK) 
         
@@ -99,6 +100,7 @@ class OneProblem(APIView):
             serializer = ProblemSerializer(model, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
+                Hint.objects.filter(problem_id=id).delete()
                 return Response({'success:True'}, status=status.HTTP_200_OK)
             else:
                 return Response({'error':'wrong parameters'}, status=status.HTTP_400_BAD_REQUEST)
