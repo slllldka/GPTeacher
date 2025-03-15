@@ -78,8 +78,6 @@ function ProblemView(){
                                 let rect = spanRefs.current[index].getBoundingClientRect()
                                 set_hint_top(rect.top + window.scrollY)
                                 set_hint_xcenter(rect.left + window.scrollX + rect.width / 2)
-                                console.log(hint_top)
-                                console.log(hint_xcenter)
                             }}
                             onMouseOut={()=>set_mouseovered_key_text('')}
                         >
@@ -228,7 +226,14 @@ function ProblemView(){
                 <div>
                     {highlightText(memory_limit)}
                 </div>
-                <hr></hr>
+                <hr style={{marginBottom:'50px'}}></hr>
+                <div style={{display: hints.length > 0 ? 'block' : 'none', color:'green'}}>
+                    <h2>최종 힌트</h2>
+                    <div>
+                        {hints.length > 0 ? hints[0].description : ''}
+                    </div>
+                    <hr style={{marginBottom:'50px'}}></hr>
+                </div>
             </div>
         </>
     )
