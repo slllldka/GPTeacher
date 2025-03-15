@@ -30,7 +30,7 @@ class HintWithProblemID(APIView):
         except Problem.DoesNotExist:
             return Response({'error':'problem does not exist'}, status=status.HTTP_400_BAD_REQUEST)
         
-        model = Hint.objects.filter(problem_id=problem_id, key_text_start_idx__gte=0).order_by('key_text_start_idx')
+        model = Hint.objects.filter(problem_id=problem_id).order_by('key_text_start_idx')
         serializer = HintSerializer(model, many=True)
         
         if len(serializer.data) == 0:
