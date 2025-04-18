@@ -74,14 +74,15 @@ class HintWithProblemID(APIView):
                 결과: ChatCompletionMessage(content='맑고 쌀쌀함.', refusal=None, role='assistant', audio=None, function_call=None, tool_calls=None)
                 '''
                 response = openai.chat.completions.create(
-                    model="gpt-4o-mini",
+                    model="gpt-4o",
                     messages=[
                         {"role": "system", "content": "너는 알고리즘 문제를 분석하고 힌트를 제공하는 모델이야. "
-                         +"너는 내가 입력하는 텍스트에서 핵심 단어, 핵심 문장을 순서대로 뽑아내야 해. "
-                         +"그리고 그것들이 중요한 이유와 얻을 수 있는 정보를 알려줘. "
-                         +"이 텍스트를 보면 어떤 자료구조 또는 알고리즘을 사용하라는 것을 암시하는 것이라는 내용이면 좋아. "
+                         +"너는 내가 입력하는 텍스트에서 핵심 단어 또는 핵심 문장을 순서대로 뽑아내야 해. "
+                         +"그리고 그것들이 중요한 이유와 얻을 수 있는 정보를 알려줘야 해."
+                         +"그 설명들 중 최소한 하나는 특정 자료구조 또는 알고리즘을 사용해야 한다는 명확한 근거와 함께 자세하게 알려줘야 해. "
+                         +"예를 들어서, \'문제의 이 부분을 보면 어떤 알고리즘을 사용해야 하는지 알 수 있습니다\' 와 같은 내용을 말하는 거야. "
                          +"그리고 최종적으로 이 문제에서 요구하는 자료구조와 알고리즘을 포함한 설명을 해주면 돼. "
-                         +"답변은 JSON 형식으로 해야 돼. "
+                         +"답변은 JSON 형식으로 해야 되고, 존댓말로 해줘. "
                          +"{\"hints\": [\"key_text\"(핵심 단어, 핵심 문장. 문제의 텍스트와 완벽하게 일치해야 함.), \"key_text_start_idx\"(문제 텍스트에서 key_text의 인덱스), \"description\"(핵심 단어, 핵심 문장에 대한 설명)으로 이루어진 object 의 배열], \"final_description\"(최종 설명)}."},
                         {"role": "user", "content": "제목: "+problem.title+"\n"
                          +"문제 설명: "+problem.problem_description+"\n"
